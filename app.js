@@ -1,34 +1,3 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-const supabaseUrl = 'https://izsggdtdiacxdsjjncdq.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6c2dnZHRkaWFjeGRzampuY2RxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg1OTEzNjUsImV4cCI6MjA1NDE2NzM2NX0.FVKBJG-TmXiiYzBDjGIRBM2zg-DYxzNP--WM6q2UMt0';
-const supabaseClient = createClient(supabaseUrl, supabaseKey);
-
-(async () => {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-
-    if (session && session.user) {
-        try {
-            const { error, count } = await supabaseClient
-                .from('enrollment')
-                .select('course', { count: 'exact', head: true })
-                .eq('uuid', session.user.id)
-                .eq('course', 'industrial-training-mastery');
-            
-            if (error) {
-                console.error("Enrollment check failed:", error);
-                return;
-            }
-
-            if (count > 0) {
-                window.location.href = '/learning-management-system/';
-            }
-        } catch (e) {
-            console.error("Error during enrollment check:", e);
-        }
-    }
-})();
-
 const generateData = () => {
   const baseURL = "https://www.mystudentclub.com/assets/";
 
@@ -114,7 +83,7 @@ const generateData = () => {
   ];
 
   const students = [];
-  const addedStudentKeys = new Set(); 
+  const addedStudentKeys = new Set();
 
   prioritizedStudentsOrder.forEach(pStudent => {
     const foundStudent = allAvailableStudents.find(
@@ -184,7 +153,7 @@ const initializeCarousel = () => {
 
     if (true) {
       position -= speed * (delta / 16);
-      if (position <= -(getCardWidth() * cards.length / 2)) { 
+      if (position <= -(getCardWidth() * cards.length / 2)) {
         position = 0;
       }
       carousel.style.transform = `translateX(${position}px)`;
@@ -231,28 +200,20 @@ const initializeCarousel = () => {
 
 const initializeCountdown = () => {
   const timerEl = document.getElementById('timer');
-  const registerButtonHero = document.getElementById('registerButtonHero');
-  const registerButtonFooter = document.getElementById('registerButtonFooter');
-  const ctaFooter = document.getElementById('cta-footer');
-
   if (!timerEl) return;
 
-  // Target date: October 17, 2025, 12 AM (00:00:00) in Asia/Calcutta (IST, UTC+5:30)
-  const targetDate = new Date('2025-10-17T00:00:00+05:30');
+  const targetDate = new Date('2025-08-17T23:59:00');
 
   function updateTimer() {
     const now = new Date();
     const diff = targetDate - now;
 
     if (diff <= 0) {
-      timerEl.textContent = "00d 00h 00m 00s";
+      timerEl.textContent = "00h 00m 00s";
       clearInterval(timerInterval);
-      if (registerButtonHero) registerButtonHero.style.display = 'none';
-      if (registerButtonFooter) registerButtonFooter.style.display = 'none';
-      if (ctaFooter) ctaFooter.style.display = 'none'; // Hide the entire footer CTA if the timer is expired
       return;
     }
-    
+
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -276,7 +237,7 @@ const initializeTestimonials = () => {
       image: "https://mystudentclub.pages.dev/assets/t2.jpg"
     },
     {
-      text: "Hi everyone I'm Pragesh one of the student who enrolled under My student club Industrial Training Guarantee Program and that too in the first batch and i'm happy to share that I've been selected by HDFC bank for IT in the ECG department. Being said that it as a step taken by me without thinking anything because i didn't had much idea about MSC at that time but trust me the kind of lectures that ere conducted by Padam during the 10-12 days period having different people each time sharing different strategies and their story made it all worth it . And the kind of support that was given after the batch by Padam made it clear ho much efforts he is trying to put behind each and every person enrolled under the batch reaching them out on call on regular basis made…",
+      text: "Hi everyone I'm Pragesh one of the student who enrolled under My student club MSC Industrial Training Program and that too in the first batch and i'm happy to share that I've been selected by HDFC bank for IT in the ECG department. Being said that it as a step taken by me without thinking anything because i didn't had much idea about MSC at that time but trust me the kind of lectures that ere conducted by Padam during the 10-12 days period having different people each time sharing different strategies and their story made it all worth it . And the kind of support that was given after the batch by Padam made it clear ho much efforts he is trying to put behind each and every person enrolled under the batch reaching them out on call on regular basis made…",
       image: "https://mystudentclub.pages.dev/assets/t3.jpg"
     },
     {
@@ -418,23 +379,23 @@ const initializeCertificate = () => {
   }
 };
 
-function initializeParallax(){
+function initializeParallax() {
   const layers = document.querySelectorAll('.layer');
-  if(!layers.length) return;
-  const move = (x=0,y=0)=>layers.forEach(el=>{
-    const d = parseFloat(el.dataset.depth||0.05);
-    el.style.transform = `translate3d(${x*d}px, ${y*d}px, 0)`;
+  if (!layers.length) return;
+  const move = (x = 0, y = 0) => layers.forEach(el => {
+    const d = parseFloat(el.dataset.depth || 0.05);
+    el.style.transform = `translate3d(${x * d}px, ${y * d}px, 0)`;
   });
-  window.addEventListener('mousemove', e=>{
-    const cx = window.innerWidth/2, cy = window.innerHeight/2;
-    move((e.clientX-cx)*0.04, (e.clientY-cy)*0.06);
+  window.addEventListener('mousemove', e => {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    move((e.clientX - cx) * 0.04, (e.clientY - cy) * 0.06);
   });
-  window.addEventListener('scroll', ()=>{
-    const y = window.scrollY*0.08; layers.forEach(el=>{
-      const d = parseFloat(el.dataset.depth||0.05);
-      el.style.transform = `translate3d(0, ${y*d}px, 0)`;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY * 0.08; layers.forEach(el => {
+      const d = parseFloat(el.dataset.depth || 0.05);
+      el.style.transform = `translate3d(0, ${y * d}px, 0)`;
     });
-  }, {passive:true});
+  }, { passive: true });
 }
 
 function adjustDaysGrid() {
@@ -450,7 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
   safe(initializeCarousel, 'carousel');
   safe(initializeCertificate, 'certificate');
   safe(initializeParallax, 'parallax');
-  safe(initializeCountdown, 'countdown'); // Add this line to initialize the countdown
   AOS.init({
     duration: 1000,
     once: true
