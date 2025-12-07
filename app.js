@@ -406,6 +406,8 @@ function initializeCurriculumCenter() {
 
 }
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
   safe(initializeTestimonials, 'testimonials');
   safe(initializeCarousel, 'carousel');
@@ -416,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
     once: true
   });
 });
+
 
 function safe(fn, label) {
   try {
